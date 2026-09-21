@@ -1,9 +1,7 @@
 #!/bin/sh
 # Self-contained Gradle launcher for environments where Gradle is not preinstalled.
 set -eu
-if command -v gradle >/dev/null 2>&1; then
-  exec gradle "$@"
-fi
+# Do not use a system Gradle: Fabric Loom 1.7 is tested with this pinned version.
 GRADLE_VERSION=8.10.2
 CACHE="${GRADLE_USER_HOME:-$HOME/.gradle}/wrapper/dists/gradle-${GRADLE_VERSION}-bin"
 DIST="$CACHE/gradle-${GRADLE_VERSION}"

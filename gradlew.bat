@@ -1,10 +1,5 @@
 @echo off
 setlocal
-where gradle >nul 2>nul
-if %ERRORLEVEL% EQU 0 (
-  gradle %*
-  exit /b %ERRORLEVEL%
-)
 set "VERSION=8.10.2"
 set "CACHE=%USERPROFILE%\.gradle\wrapper\dists\gradle-%VERSION%-bin"
 set "DIST=%CACHE%\gradle-%VERSION%"
