@@ -16,7 +16,9 @@ public final class FlyWireEntities {
     public static final EntityType<FlyEntity> FLY = Registry.register(
             Registries.ENTITY_TYPE,
             Identifier.of(FlyWire.MOD_ID, "fly"),
-            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, FlyEntity::new)
+            FabricEntityTypeBuilder.createMob()
+                    .spawnGroup(SpawnGroup.CREATURE)
+                    .entityFactory(FlyEntity::new)
                     .dimensions(EntityDimensions.changing(0.30f, 0.20f))
                     .trackRangeBlocks(8)
                     .trackedUpdateRate(2)
