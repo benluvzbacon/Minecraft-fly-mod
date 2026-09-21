@@ -23,9 +23,9 @@ def main():
             count += 1
             sources.add(row.get("pre_pt_root_id", row.get("pre_root_id", "")))
             targets.add(row.get("post_pt_root_id", row.get("post_root_id", "")))
-            count = row.get("syn_count", row.get("synapse_count"))
-            if count is None: raise ValueError("connection table has no synapse count")
-            synapses += int(float(count))
+            synapse_count = row.get("syn_count", row.get("synapse_count"))
+            if synapse_count is None: raise ValueError(f"connection table has no synapse count; columns={reader.fieldnames}")
+            synapses += int(float(synapse_count))
     print(json.dumps({"connection_rows": count, "unique_sources": len(sources), "unique_targets": len(targets), "synapse_count_sum": synapses}, indent=2))
 
 if __name__ == "__main__": main()

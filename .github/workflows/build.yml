@@ -45,7 +45,18 @@ jobs:
         run: python tools/verify_checksums.py
 
       - name: Inspect the raw FlyWire tables
-        run: python tools/inspect_dataset.py
+        run: |
+          mkdir -p build/diagnostics
+          set -o pipefail
+          python tools/inspect_dataset.py 2>&1 | tee build/diagnostics/inspect.log
+
+      - name: Upload inspection diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: flywire-inspection-diagnostics
+          path: build/diagnostics/inspect.log
+          if-no-files-found: warn
 
       - name: Preprocess the real connectome
         run: python tools/build_connectome.py
