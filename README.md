@@ -50,7 +50,7 @@ These distinctions are also recorded in [`data/flywire/README.md`](data/flywire/
 - Neural control rather than goals/pathfinding: hovering, acceleration/deceleration, turns, vertical motion, takeoff/landing, feeding and threat response are decoded from brain activity.
 - Local sensing of brightness/obstacles, player/entity looming, flowers/honey/sweet food, contact and heat. The fly is not given world-wide target knowledge.
 - A registered `flywire:fly_spawn_egg` in the vanilla Spawn Eggs creative tab, with `/give @s flywire:fly_spawn_egg` support.
-- The fly is a persistent experiment, not a one-shot effect: it has serialized flight state, continuously samples its world, keeps an independent neural state vector, and can be damaged, saved, reloaded, bred into repeated trials, or killed normally.
+- The fly is a persistent experiment, not a one-shot effect: it has serialized flight state, continuously samples its world, keeps an independent neural state vector, and can be spawned repeatedly, damaged, saved, reloaded, or killed normally.
 - Optional operator commands: `/flywire spawn`, `/flywire stats`, `/flywire brain` (permission level 2).
 - Optional profiling/debug properties:
   - `-Dflywire.neural.enabled=true|false`
