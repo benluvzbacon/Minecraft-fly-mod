@@ -69,14 +69,13 @@ public final class FlyModel extends EntityModel<FlyEntity> {
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay,
-                       float red, float green, float blue, float alpha) {
-        body.render(matrices, vertices, light, overlay, red, green, blue, alpha);
-        head.render(matrices, vertices, light, overlay, red, green, blue, alpha);
-        wingLeft.render(matrices, vertices, light, overlay, red, green, blue, alpha);
-        wingRight.render(matrices, vertices, light, overlay, red, green, blue, alpha);
-        antennaLeft.render(matrices, vertices, light, overlay, red, green, blue, alpha);
-        antennaRight.render(matrices, vertices, light, overlay, red, green, blue, alpha);
-        for (ModelPart leg : legs) leg.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+        body.render(matrices, vertices, light, overlay, color);
+        head.render(matrices, vertices, light, overlay, color);
+        wingLeft.render(matrices, vertices, light, overlay, color);
+        wingRight.render(matrices, vertices, light, overlay, color);
+        antennaLeft.render(matrices, vertices, light, overlay, color);
+        antennaRight.render(matrices, vertices, light, overlay, color);
+        for (ModelPart leg : legs) leg.render(matrices, vertices, light, overlay, color);
     }
 }
