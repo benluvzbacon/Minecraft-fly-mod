@@ -38,9 +38,9 @@ public final class FlyEntity extends PathAwareEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return PathAwareEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 2.0)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.35)
-                .add(EntityAttributes.KNOCKBACK_RESISTANCE, 0.0);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 2.0)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.35)
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.0);
     }
 
     public static boolean canSpawn(EntityType<FlyEntity> type, ServerWorldAccess world, net.minecraft.entity.SpawnReason reason, BlockPos pos, net.minecraft.util.math.random.Random random) {
@@ -137,8 +137,8 @@ public final class FlyEntity extends PathAwareEntity {
         setYaw(getYaw() + turn);
         boolean shouldFly = flying;
         if (output.takeoff() > 0.15f || output.escape() > 0.1f) shouldFly = true;
-        if (output.landing() > 0.4f && onGround()) shouldFly = false;
-        if (onGround() && output.takeoff() < 0.05f && output.escape() < 0.05f && output.forward() < 0.05f) shouldFly = false;
+        if (output.landing() > 0.4f && isOnGround()) shouldFly = false;
+        if (isOnGround() && output.takeoff() < 0.05f && output.escape() < 0.05f && output.forward() < 0.05f) shouldFly = false;
         flying = shouldFly;
         setNoGravity(flying);
 

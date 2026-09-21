@@ -142,7 +142,7 @@ public final class NeuralRuntime {
         if (indices.length == 0) return 0f;
         long count = 0;
         for (int index : indices) count += spikes[index];
-        return Math.min(1f, (float) count / (indices.length * (double) config.maxSubsteps()));
+        return Math.min(1f, (float) count / (indices.length * (float) config.maxSubsteps()));
     }
 
     private float signedRate(String population) { return rate(population); }
