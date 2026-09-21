@@ -6,12 +6,7 @@ pluginManagement {
     }
 }
 
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        maven { name = 'Fabric'; url = 'https://maven.fabricmc.net/' }
-        mavenCentral()
-    }
-}
-
+// Fabric Loom adds its remapped Minecraft repositories during plugin application.
+// Keeping dependency repositories in build.gradle avoids Gradle's settings-level
+// repository lock rejecting those Loom repositories.
 rootProject.name = 'flywire-minecraft-mod'
