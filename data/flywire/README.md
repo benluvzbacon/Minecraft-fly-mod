@@ -24,8 +24,10 @@ The runtime shares these immutable primitive arrays across every Fly. Each entit
 ## Simulation approximations
 
 - Membrane and refractory dynamics are a fixed-step leaky integrate-and-fire approximation, not a claim of exact fly biophysics.
-- Synapse count becomes a bounded conductance for numerical stability. The count and edge remain present; this is a weight approximation.
+- Synapse count becomes a bounded conductance/charge kick for numerical stability. The count and edge remain present; this is a weight and time-course approximation.
 - Minecraft brightness, local block silhouettes, movement/looming, odor-like flower/food fields, taste/contact, heat and gravity are an embodiment encoder, not a biological retina, antenna or proboscis.
-- The motor decoder aggregates firing in annotation-derived groups into Minecraft thrust, turn, vertical, wing, takeoff, landing and feeding controls. Minecraft collision and movement are approximated by the entity physics.
+- The runtime samples a configurable budget of real sensory neurons per signal and rotates that sample between ticks so the full annotated population can participate over time without firing 97,000 visual neurons every server tick.
+- The motor decoder aggregates firing and subthreshold voltage in annotation-derived groups into Minecraft thrust, turn, vertical, wing, takeoff, landing and feeding controls. Minecraft collision and movement are approximated by the entity physics.
+- A small flight-muscle trim keeps an experimental fly visibly airborne while sparse motor populations warm up; neural outputs are applied on top and are responsible for steering and state transitions.
 
 The data path is therefore `Minecraft World -> sensory encoder -> real FlyWire sensory populations -> real v783 CSR connectome -> real annotated descending/motor populations -> motor decoder -> Fly movement`.

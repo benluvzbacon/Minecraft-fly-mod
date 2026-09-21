@@ -49,11 +49,14 @@ These distinctions are also recorded in [`data/flywire/README.md`](data/flywire/
 - Minecraft-style pixel-art model: blocky body/head, compound-eye texture, six legs, antennae and two animated translucent-looking wings.
 - Neural control rather than goals/pathfinding: hovering, acceleration/deceleration, turns, vertical motion, takeoff/landing, feeding and threat response are decoded from brain activity.
 - Local sensing of brightness/obstacles, player/entity looming, flowers/honey/sweet food, contact and heat. The fly is not given world-wide target knowledge.
+- A registered `flywire:fly_spawn_egg` in the vanilla Spawn Eggs creative tab, with `/give @s flywire:fly_spawn_egg` support.
+- The fly is a persistent experiment, not a one-shot effect: it has serialized flight state, continuously samples its world, keeps an independent neural state vector, and can be damaged, saved, reloaded, bred into repeated trials, or killed normally.
 - Optional operator commands: `/flywire spawn`, `/flywire stats`, `/flywire brain` (permission level 2).
 - Optional profiling/debug properties:
   - `-Dflywire.neural.enabled=true|false`
-  - `-Dflywire.neural.maxSubsteps=4` (1–32 biological ms steps per tick)
-  - `-Dflywire.neural.maxFlies=32` (1–256 independent state vectors)
+  - `-Dflywire.neural.maxSubsteps=8` (1–32 biological ms steps per tick)
+  - `-Dflywire.neural.maxFlies=8` (1–256 independent state vectors)
+  - `-Dflywire.neural.maxInputNeurons=256` (16–2048 real sensory neurons sampled per signal/tick)
   - `-Dflywire.neural.debug=true`
   - `-Dflywire.neural.profile=true`
 

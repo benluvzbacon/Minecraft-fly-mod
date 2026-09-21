@@ -10,5 +10,6 @@ class ConfigTest {
         NeuralConfig config = NeuralConfig.load();
         assertTrue(config.maxSubsteps() >= 1 && config.maxSubsteps() <= 32);
         assertTrue(config.maxFlies() >= 1 && config.maxFlies() <= 256);
+        assertTrue(config.maxInputNeurons() >= 16 && config.maxInputNeurons() <= 2048);
     }
 }

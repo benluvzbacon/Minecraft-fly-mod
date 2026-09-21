@@ -4,6 +4,7 @@ import com.flywire.minecraft.brain.BrainManager;
 import com.flywire.minecraft.command.FlyWireCommands;
 import com.flywire.minecraft.entity.FlyEntity;
 import com.flywire.minecraft.registry.FlyWireEntities;
+import com.flywire.minecraft.registry.FlyWireItems;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -21,6 +22,7 @@ public final class FlyWire implements net.fabricmc.api.ModInitializer {
     @Override
     public void onInitialize() {
         FlyWireEntities.register();
+        FlyWireItems.register();
         FabricDefaultAttributeRegistry.register(FlyWireEntities.FLY, FlyEntity.createAttributes().build());
         BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.IS_OVERWORLD), SpawnGroup.CREATURE,
                 FlyWireEntities.FLY, 18, 2, 5);
