@@ -97,21 +97,24 @@ public final class NeuralRuntime {
     private void integrateSubstep() {
         firedCount = 0;
         for (int neuron = 0; neuron < membrane.length; neuron++) {
-            float drive = pending[neuron] + external[neuron];
+            // A bounded synaptic event is an instantaneous conductance/charge kick;
+            // sensory drive remains a tonic current in the Euler LIF update below.
+            float synapticKick = pending[neuron];
             pending[neuron] = 0f;
             if (refractory[neuron] > 0f) {
                 refractory[neuron] -= DT;
                 membrane[neuron] = 0f;
                 continue;
             }
-            if (drive == 0f && membrane[neuron] == 0f) continue;
+            if (synapticKick == 0f && external[neuron] == 0f && membrane[neuron] == 0f) continue;
             if (!activeThisTick[neuron]) {
                 activeThisTick[neuron] = true;
                 lastActive++;
             }
             // Euler LIF update. A per-edge synapse count is converted to a bounded
             // effective conductance; no connectivity is discarded by this scaling.
-            membrane[neuron] += ((-membrane[neuron] + drive) / TAU) * DT;
+            membrane[neuron] += synapticKick;
+            membrane[neuron] += ((-membrane[neuron] + external[neuron]) / TAU) * DT;
             if (membrane[neuron] >= THRESHOLD) {
                 membrane[neuron] = 0f;
                 refractory[neuron] = REFRACTORY;
