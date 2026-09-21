@@ -174,7 +174,7 @@ public final class FlyEntity extends PathAwareEntity {
     }
 
     @Override
-    protected void writeCustomDataToNbt(NbtCompound nbt) {
+    public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("FlyWireFlying", flying);
         nbt.putFloat("FlyWireWingPhase", wingPhase);
@@ -182,7 +182,7 @@ public final class FlyEntity extends PathAwareEntity {
     }
 
     @Override
-    protected void readCustomDataFromNbt(NbtCompound nbt) {
+    public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         flying = nbt.getBoolean("FlyWireFlying");
         wingPhase = nbt.getFloat("FlyWireWingPhase");
