@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "flywire",
+  "version": "${version}",
+  "name": "FlyWire Brain",
+  "description": "A Minecraft fly driven by a processed FlyWire FAFB v783 connectome.",
+  "authors": ["FlyWire Minecraft contributors"],
+  "contact": { "sources": "https://github.com/benluvzbacon/Minecraft-fly-mod" },
+  "license": "MIT",
+  "icon": "assets/flywire/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.flywire.minecraft.FlyWire"],
+    "client": ["com.flywire.minecraft.client.FlyWireClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.5",
+    "minecraft": "1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}

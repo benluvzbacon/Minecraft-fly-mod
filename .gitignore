@@ -1,0 +1,11 @@
+.gradle/
+build/
+run/
+.idea/
+*.iml
+
+# FlyWire raw and generated artifacts are intentionally not checked in.
+data/flywire/raw/*
+!data/flywire/raw/.gitkeep
+data/flywire/processed/*
+!data/flywire/processed/.gitkeep

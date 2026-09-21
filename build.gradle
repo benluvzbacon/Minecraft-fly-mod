@@ -1,0 +1,96 @@
+plugins {
+    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    mavenCentral()
+    maven { name = 'Fabric'; url = 'https://maven.fabricmc.net/' }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    testImplementation platform('org.junit:junit-bom:5.11.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+loom {
+    splitEnvironmentSourceSets()
+    mods {
+        "flywire" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir layout.buildDirectory.dir('generated/flywire-resources')
+        }
+    }
+}
+
+def processedDir = file('data/flywire/processed')
+def generatedDir = layout.buildDirectory.dir('generated/flywire-resources').get().asFile
+
+tasks.register('prepareFlyWireData') {
+    group = 'flywire data'
+    description = 'Copies a separately generated, verified FlyWire v783 binary into the Minecraft resources.'
+    inputs.dir(processedDir)
+    outputs.dir(generatedDir)
+    doLast {
+        def connectome = file("${processedDir}/flywire-v783.bin")
+        def populations = file("${processedDir}/flywire-v783.populations.tsv")
+        if (!connectome.exists() || !populations.exists()) {
+            if (providers.gradleProperty('requireFlyWireData').isPresent()) {
+                throw new GradleException("Verified FlyWire resources are missing. Run tools/download_flywire.py and tools/build_connectome.py first.")
+            }
+            logger.lifecycle('FlyWire v783 resources are not present; building the code-only development jar. CI passes -PrequireFlyWireData after preprocessing.')
+            return
+        }
+        def destination = file("${generatedDir}/data/flywire/brain")
+        destination.mkdirs()
+        copy {
+            from processedDir
+            include 'flywire-v783.bin', 'flywire-v783.populations.tsv', 'flywire-v783.metadata.json'
+            into destination
+        }
+    }
+}
+
+tasks.named('processResources') {
+    dependsOn tasks.named('prepareFlyWireData')
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    filesMatching('fabric.mod.json') { expand 'version': project.version }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+    options.encoding = 'UTF-8'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        create('mavenJava', MavenPublication) {
+            from components.java
+        }
+    }
+    repositories { }
+}

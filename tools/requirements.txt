@@ -1,0 +1,2 @@
+# Optional only for users who choose the Zenodo Feather source instead of the public Codex CSV export.
+pyarrow>=16.0
