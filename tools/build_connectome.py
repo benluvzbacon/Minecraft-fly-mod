@@ -30,8 +30,12 @@ def read_annotations(path: pathlib.Path):
     return roots, index, rows
 
 def polarity(row):
-    # Predicted neurotransmitter probabilities are present in Codex exports when
-    # available. Use them only to assign a sign; the count stays lossless.
+    # Codex CSV exports carry either a per-row nt_type or probability columns.
+    # Use those released values only to assign a sign; the synapse count stays
+    # lossless. Fast conductance sign is a documented dynamics approximation.
+    nt = str(norm(row, "nt_type", "neurotransmitter", default="")).upper()
+    if nt in {"GABA", "GLUT", "GLUTAMATE"}: return -1
+    if nt in {"ACH", "ACETYLCHOLINE"}: return 1
     inhibitory = float(norm(row, "gaba_avg", "gaba", default="0") or 0)
     excitatory = sum(float(norm(row, key, default="0") or 0) for key in
                      ("ach_avg", "ach", "oct_avg", "oct", "ser_avg", "ser", "da_avg", "da"))

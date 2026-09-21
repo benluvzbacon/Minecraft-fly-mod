@@ -41,12 +41,17 @@ jobs:
       - name: Download FlyWire FAFB v783 inputs
         run: python tools/download_flywire.py
 
-      - name: Verify raw checksums, inspect and preprocess the real connectome
-        run: |
-          python tools/verify_checksums.py
-          python tools/inspect_dataset.py
-          python tools/build_connectome.py
-          python tools/validate_processed.py
+      - name: Verify raw checksums
+        run: python tools/verify_checksums.py
+
+      - name: Inspect the raw FlyWire tables
+        run: python tools/inspect_dataset.py
+
+      - name: Preprocess the real connectome
+        run: python tools/build_connectome.py
+
+      - name: Validate the generated sparse representation
+        run: python tools/validate_processed.py
 
       - name: Unit tests
         run: ./gradlew test
